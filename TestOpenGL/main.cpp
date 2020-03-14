@@ -19,50 +19,52 @@ void initGL() {
 
 void displayCube()
 {
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-       // Top face (y = 1.0f)
-       // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glutSolidCube(1.0);
+    //glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+    //   // Top face (y = 1.0f)
+    //   // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glVertex3f(1.0f, 1.0f, -1.0f);
+    //glVertex3f(-1.0f, 1.0f, -1.0f);
+    //glVertex3f(-1.0f, 1.0f, 1.0f);
+    //glVertex3f(1.0f, 1.0f, 1.0f);
 
-    // Bottom face (y = -1.0f)
-    glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
+    //// Bottom face (y = -1.0f)
+    //glColor3f(1.0f, 0.5f, 0.0f);     // Orange
+    //glVertex3f(1.0f, -1.0f, 1.0f);
+    //glVertex3f(-1.0f, -1.0f, 1.0f);
+    //glVertex3f(-1.0f, -1.0f, -1.0f);
+    //glVertex3f(1.0f, -1.0f, -1.0f);
 
-    // Front face  (z = 1.0f)
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
+    //// Front face  (z = 1.0f)
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glVertex3f(1.0f, 1.0f, 1.0f);
+    //glVertex3f(-1.0f, 1.0f, 1.0f);
+    //glVertex3f(-1.0f, -1.0f, 1.0f);
+    //glVertex3f(1.0f, -1.0f, 1.0f);
 
-    // Back face (z = -1.0f)
-    glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, -1.0f);
+    //// Back face (z = -1.0f)
+    //glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
+    //glVertex3f(1.0f, -1.0f, -1.0f);
+    //glVertex3f(-1.0f, -1.0f, -1.0f);
+    //glVertex3f(-1.0f, 1.0f, -1.0f);
+    //glVertex3f(1.0f, 1.0f, -1.0f);
 
-    // Left face (x = -1.0f)
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
+    //// Left face (x = -1.0f)
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glVertex3f(-1.0f, 1.0f, 1.0f);
+    //glVertex3f(-1.0f, 1.0f, -1.0f);
+    //glVertex3f(-1.0f, -1.0f, -1.0f);
+    //glVertex3f(-1.0f, -1.0f, 1.0f);
 
-    // Right face (x = 1.0f)
-    glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glEnd();  // End of drawing color-cube
+    //// Right face (x = 1.0f)
+    //glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
+    //glVertex3f(1.0f, 1.0f, -1.0f);
+    //glVertex3f(1.0f, 1.0f, 1.0f);
+    //glVertex3f(1.0f, -1.0f, 1.0f);
+    //glVertex3f(1.0f, -1.0f, -1.0f);
+    //glEnd();  // End of drawing color-cube
 
 }
 
@@ -103,6 +105,12 @@ void displayPyramid()
     glEnd();   // Done drawing the pyramid
 }
 
+void displaySphere()
+{
+    glColor3f(0.9, 0.3, 0.2);
+    glutSolidSphere(1.0, 50, 50);
+}
+
 /* Handler for window-repaint event. Called back when the window first appears and
    whenever the window needs to be re-painted. */
 void display() {
@@ -123,6 +131,10 @@ void display() {
     {
         //glPolygonMode(GL_FRONT_AND_BACK, polyMode);
         displayPyramid();
+    }
+    else if (shape == "Sphere")
+    {
+        displaySphere();
     }
     
 
@@ -206,6 +218,10 @@ void normalKeys(unsigned char key, int x, int y)
     if (key == '2')
     {
         shape = "Pyramid";
+    }
+    if (key == '3')
+    {
+        shape = "Sphere";
     }
     glutPostRedisplay();
 }

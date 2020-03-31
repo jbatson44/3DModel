@@ -2,11 +2,13 @@
 #include <GL/glut.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-
+#include "OBJModel.h"
 /* Global variables */
 char title[] = "3D Shapes";
 GLint polyMode = GL_FILL;
 std::string shape;
+OBJModel model;
+
 /* Initialize OpenGL Graphics */
 void initGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -111,6 +113,11 @@ void displaySphere()
     glutSolidSphere(1.0, 50, 50);
 }
 
+void displayOther()
+{
+    model.draw();
+}
+
 /* Handler for window-repaint event. Called back when the window first appears and
    whenever the window needs to be re-painted. */
 void display() {
@@ -135,6 +142,10 @@ void display() {
     else if (shape == "Sphere")
     {
         displaySphere();
+    }
+    else if (shape == "other")
+    {
+        displayOther();
     }
     
 
@@ -223,12 +234,20 @@ void normalKeys(unsigned char key, int x, int y)
     {
         shape = "Sphere";
     }
+    if (key == '4')
+    {
+        shape = "other";
+    }
     glutPostRedisplay();
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv) {
     
+    //model.readfile("cube.obj");
+    //model.readfile("Human.obj");
+    //model.readfile("M9.obj");
+    model.readfile("TieOBJ.obj");
     glutInit(&argc, argv);            // Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
     glutInitWindowSize(640, 480);   // Set the window's initial width & height

@@ -245,9 +245,9 @@ void normalKeys(unsigned char key, int x, int y)
 int main(int argc, char** argv) {
     
     //model.readfile("cube.obj");
-    //model.readfile("Human.obj");
+    model.readfile("Human.obj");
     //model.readfile("M9.obj");
-    model.readfile("TieOBJ.obj");
+    //model.readfile("TieOBJ.obj");
     glutInit(&argc, argv);            // Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
     glutInitWindowSize(640, 480);   // Set the window's initial width & height

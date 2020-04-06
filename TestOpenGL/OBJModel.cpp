@@ -94,7 +94,7 @@ void OBJModel::readfile(const char* filename)
     //cout << "ending";
 }
 
-void OBJModel::draw()
+void OBJModel::draw(GLfloat red, GLfloat green, GLfloat blue)
 {
     cout << "drawing model\n";
     //cout << faces.size() << endl;
@@ -106,7 +106,8 @@ void OBJModel::draw()
         vertex v2 = vertices[faces[i].v2 - 1];
         vertex v3 = vertices[faces[i].v3 - 1];
         //cout << "(" << v1.x << "," << v1.y << "," << v1.z << ")\n";
-        glColor3f(0.0f, 0.0f, 1.0f);
+        //glColor3f(0.0f, 0.0f, 1.0f);
+        glColor3f(red, green, blue);
         glVertex3f(v1.x, v1.y, v1.z);
         glVertex3f(v2.x, v2.y, v2.z);
         glVertex3f(v3.x, v3.y, v3.z);

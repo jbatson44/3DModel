@@ -15,6 +15,26 @@ GLfloat rotation_x = 0.0f;
 GLfloat rotation_y = 0.0f;
 GLfloat transAmount = .5f;
 GLfloat rotAmount = 5.0f;
+GLfloat red = 1.0f;
+GLfloat green = 1.0f;
+GLfloat blue = 1.0f;
+
+
+struct Color
+{
+    GLfloat red;
+    GLfloat green;
+    GLfloat blue;
+};
+
+Color color[] = {
+{ 1.0f, 0.0f, 0.0f }, //red
+{ 0.0f, 1.0f, 0.0f }, //green
+{ 0.0f, 0.0f, 1.0f }  //blue
+};
+
+int colorSize = sizeof(color) / sizeof(color[0]);
+int colorIndex = 0;
 /* Initialize OpenGL Graphics */
 void initGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -28,7 +48,8 @@ void initGL() {
 void displayCube()
 {
     glTranslatef(translate_x, translate_y, translate_z);
-    glColor3f(1.0f, 0.0f, 0.0f);
+    //glColor3f(1.0f, 0.0f, 0.0f);
+    glColor3f(red, green, blue);
     glutSolidCube(1.0);
     //glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
     //   // Top face (y = 1.0f)
@@ -82,35 +103,36 @@ void displayPyramid()
     glTranslatef(translate_x, translate_y, translate_z);
     glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
        // Front
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    glColor3f(red, green, blue);
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
     glVertex3f(-1.0f, -1.0f, 1.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(1.0f, -1.0f, 1.0f);
 
     // Right
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(1.0f, -1.0f, 1.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
     glVertex3f(1.0f, -1.0f, -1.0f);
 
     // Back
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
     glVertex3f(1.0f, -1.0f, -1.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(-1.0f, -1.0f, -1.0f);
 
     // Left
-    glColor3f(1.0f, 0.0f, 0.0f);       // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);       // Red
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);       // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);       // Blue
     glVertex3f(-1.0f, -1.0f, -1.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);       // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);       // Green
     glVertex3f(-1.0f, -1.0f, 1.0f);
     glEnd();   // Done drawing the pyramid
 }
@@ -118,14 +140,16 @@ void displayPyramid()
 void displaySphere()
 {
     glTranslatef(translate_x, translate_y, translate_z);
-    glColor3f(0.9, 0.3, 0.2);
+    //glColor3f(0.9, 0.3, 0.2);
+    glColor3f(red, green, blue);
     glutSolidSphere(1.0, 50, 50);
 }
 
 void displayOther()
 {
     glTranslatef(translate_x, translate_y, translate_z);
-    model.draw();
+    //glColor3f(red, green, blue);
+    model.draw(red, green, blue);
 }
 
 /* Handler for window-repaint event. Called back when the window first appears and
@@ -264,6 +288,13 @@ void normalKeys(unsigned char key, int x, int y)
         translate_y -= transAmount;
        
     }
+    if (key == 'c')
+    {
+        red = color[colorIndex].red;
+        green = color[colorIndex].green;
+        blue = color[colorIndex].blue;
+        colorIndex = (colorIndex + 1) % colorSize;
+    }
     // ONE
     if (key == '1')
     {
@@ -272,7 +303,10 @@ void normalKeys(unsigned char key, int x, int y)
         translate_z = 0.0f;
         rotation_x = 0.0f;
         rotation_y = 0.0f;
-        
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "Cube";
     }
     // TWO
@@ -283,7 +317,10 @@ void normalKeys(unsigned char key, int x, int y)
         translate_z = 0.0f;
         rotation_x = 0.0f;
         rotation_y = 0.0f;
-        
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "Pyramid";
     }
     if (key == '3')
@@ -293,7 +330,10 @@ void normalKeys(unsigned char key, int x, int y)
         translate_z = 0.0f;
         rotation_x = 0.0f;
         rotation_y = 0.0f;
-        
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "Sphere";
     }
     if (key == '4')
@@ -303,7 +343,10 @@ void normalKeys(unsigned char key, int x, int y)
         translate_z = 0.0f;
         rotation_x = 0.0f;
         rotation_y = 0.0f;
-        
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "other";
     }
     glutPostRedisplay();

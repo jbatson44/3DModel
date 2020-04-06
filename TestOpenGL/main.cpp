@@ -6,9 +6,15 @@
 /* Global variables */
 char title[] = "3D Shapes";
 GLint polyMode = GL_FILL;
-std::string shape;
+std::string shape = "Cube";
 OBJModel model;
-
+GLfloat translate_x = 0.0f;
+GLfloat translate_y = 0.0f;
+GLfloat translate_z = 0.0f;
+GLfloat rotation_x = 0.0f;
+GLfloat rotation_y = 0.0f;
+GLfloat transAmount = .5f;
+GLfloat rotAmount = 5.0f;
 /* Initialize OpenGL Graphics */
 void initGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -21,6 +27,7 @@ void initGL() {
 
 void displayCube()
 {
+    glTranslatef(translate_x, translate_y, translate_z);
     glColor3f(1.0f, 0.0f, 0.0f);
     glutSolidCube(1.0);
     //glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -72,6 +79,7 @@ void displayCube()
 
 void displayPyramid()
 {
+    glTranslatef(translate_x, translate_y, translate_z);
     glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
        // Front
     glColor3f(1.0f, 0.0f, 0.0f);     // Red
@@ -109,12 +117,14 @@ void displayPyramid()
 
 void displaySphere()
 {
+    glTranslatef(translate_x, translate_y, translate_z);
     glColor3f(0.9, 0.3, 0.2);
     glutSolidSphere(1.0, 50, 50);
 }
 
 void displayOther()
 {
+    glTranslatef(translate_x, translate_y, translate_z);
     model.draw();
 }
 
@@ -128,6 +138,13 @@ void display() {
     // Render a color-cube consisting of 6 quads with different colors
     glLoadIdentity();                 // Reset the model-view matrix
     glTranslatef(0.0f, 0.0f, -7.0f);  // Move right and into the screen
+    gluLookAt(
+        0.0f, 0.0f, 3.0f,
+        0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f);
+
+    glRotatef(rotation_x, 1.0f, 0.0f, 0.0f);
+    glRotatef(rotation_y, 0.0f, 1.0f, 0.0f);
 
     if (shape == "Cube")
     {
@@ -183,21 +200,22 @@ void specialKeys(int key, int x, int y)
     if (key == GLUT_KEY_UP)
     {
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        rotation_x += rotAmount;
     }
     // DOWN ARROW
     if (key == GLUT_KEY_DOWN)
     {
-        exit(0);
+        rotation_x -= rotAmount;
     }
     // LEFT ARROW
     if (key == GLUT_KEY_LEFT)
     {
-        exit(0);
+        rotation_y += rotAmount;
     }
     // RIGHT ARROW
     if (key == GLUT_KEY_RIGHT)
     {
-        exit(0);
+        rotation_y -= rotAmount;
     }
 }
 
@@ -220,22 +238,72 @@ void normalKeys(unsigned char key, int x, int y)
             polyMode = GL_FILL;
         }
     }
+    if (key == 'w')
+    {
+        translate_z += transAmount;
+    }
+    if (key == 's')
+    {
+        translate_z -= transAmount;
+    }
+    if (key == 'a')
+    {
+        translate_x -= transAmount;
+    }
+    if (key == 'd')
+    {
+        translate_x += transAmount;
+    }
+    if (key == 'q')
+    {
+        translate_y += transAmount;
+        
+    }
+    if (key == 'e')
+    {
+        translate_y -= transAmount;
+       
+    }
     // ONE
     if (key == '1')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        
         shape = "Cube";
     }
     // TWO
     if (key == '2')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        
         shape = "Pyramid";
     }
     if (key == '3')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        
         shape = "Sphere";
     }
     if (key == '4')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        
         shape = "other";
     }
     glutPostRedisplay();
@@ -253,6 +321,9 @@ int main(int argc, char** argv) {
     glutInitWindowSize(640, 480);   // Set the window's initial width & height
     glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
     glutCreateWindow(title);          // Create window with the given title
+
+
+
     void (*displayFunc)() = &display;
     glutDisplayFunc(displayFunc);       // Register callback handler for window re-paint event
     glutIdleFunc(displayFunc);

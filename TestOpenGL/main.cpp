@@ -4,10 +4,17 @@
 #include <iostream>
 #include "OBJModel.h"
 /* Global variables */
+
 char title[] = "3D Shapes";
+// drawing mode
 GLint polyMode = GL_FILL;
+
+// the shape to be drawn
 std::string shape = "Cube";
+// custom model
 OBJModel model;
+
+// translation and rotation values
 GLfloat translate_x = 0.0f;
 GLfloat translate_y = 0.0f;
 GLfloat translate_z = 0.0f;
@@ -15,11 +22,11 @@ GLfloat rotation_x = 0.0f;
 GLfloat rotation_y = 0.0f;
 GLfloat transAmount = .5f;
 GLfloat rotAmount = 5.0f;
-GLfloat red = 1.0f;
-GLfloat green = 1.0f;
-GLfloat blue = 1.0f;
+GLfloat red = 0.5f;
+GLfloat green = 0.5f;
+GLfloat blue = 0.5f;
 
-
+// struct to hold the rgb values of a color
 struct Color
 {
     GLfloat red;
@@ -27,10 +34,16 @@ struct Color
     GLfloat blue;
 };
 
+// our possible colors
 Color color[] = {
 { 1.0f, 0.0f, 0.0f }, //red
 { 0.0f, 1.0f, 0.0f }, //green
-{ 0.0f, 0.0f, 1.0f }  //blue
+{ 0.0f, 0.0f, 1.0f }, //blue
+{ 1.0f, 1.0f, 0.0f }, //yellow
+{ 1.0f, 0.0f, 1.0f }, //purple
+{ 0.0f, 1.0f, 1.0f }, //teal
+{ 1.0f, 1.0f, 1.0f }, //white
+{ 0.5f, 0.5f, 0.5f }  //grey
 };
 
 int colorSize = sizeof(color) / sizeof(color[0]);
@@ -158,10 +171,10 @@ void display() {
     glPolygonMode(GL_FRONT_AND_BACK, polyMode);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear color and depth buffers
     glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
-    //std::cout << polyMode << std::endl;
+   
     // Render a color-cube consisting of 6 quads with different colors
     glLoadIdentity();                 // Reset the model-view matrix
-    glTranslatef(0.0f, 0.0f, -7.0f);  // Move right and into the screen
+    glTranslatef(0.0f, 0.0f, -7.0f);  
     gluLookAt(
         0.0f, 0.0f, 3.0f,
         0.0f, 0.0f, 0.0f,
@@ -245,7 +258,6 @@ void specialKeys(int key, int x, int y)
 
 void normalKeys(unsigned char key, int x, int y)
 {
-    std::cout << "input\n";
     // ESCAPE
     if (key == 27)
     {
@@ -356,9 +368,10 @@ void normalKeys(unsigned char key, int x, int y)
 int main(int argc, char** argv) {
     
     //model.readfile("cube.obj");
-    model.readfile("Human.obj");
+    //model.readfile("Human.obj");
     //model.readfile("M9.obj");
     //model.readfile("TieOBJ.obj");
+    model.readfile("alienbest2.obj"); // doesn't work quite right because it is quads not triangles
     glutInit(&argc, argv);            // Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
     glutInitWindowSize(640, 480);   // Set the window's initial width & height

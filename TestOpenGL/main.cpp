@@ -1,13 +1,20 @@
-//#include <GL/glew.h>
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "OBJModel.h"
+
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
+#include "GUI.h"
+//#include "GUI.cpp"
+
 /* Global variables */
 char title[] = "3D Shapes";
 GLint polyMode = GL_FILL;
 std::string shape;
 OBJModel model;
+GUI gui;
 
 /* Initialize OpenGL Graphics */
 void initGL() {
@@ -158,6 +165,8 @@ void display() {
     
 
     glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+
+
 }
 
 /* Handler for window re-size event. Called back when the window first appears and
@@ -244,8 +253,8 @@ void normalKeys(unsigned char key, int x, int y)
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv) {
     
-    //model.readfile("cube.obj");
-    model.readfile("Human.obj");
+    model.readfile("cube.obj");
+    //model.readfile("Human.obj");
     //model.readfile("M9.obj");
     //model.readfile("TieOBJ.obj");
     glutInit(&argc, argv);            // Initialize GLUT
@@ -260,6 +269,15 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(normalKeys);
     glutReshapeFunc(reshape);       // Register callback handler for window re-size event
     initGL();                       // Our own OpenGL initialization
+
+    gui.init("GUI");                // initalize GUI after Open GL initialization
+    //gui.loadScheme("TaharezLook.scheme");
+    //gui.setFont("DejaVuSans-10");
+    //gui.createWidget("TaharezLook/Button", 0.5f, 0.5f, 0.1f, 0.05f, 0.0f, 0.0f, 0.0f, 0.0f, "TestButton");
+
+    //gui.draw();
+
     glutMainLoop();                 // Enter the infinite event-processing loop
+
     return 0;
 }

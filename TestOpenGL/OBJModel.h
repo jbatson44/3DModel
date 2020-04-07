@@ -1,4 +1,5 @@
 #pragma once
+#include <GL/glut.h>
 #include <vector>
 class OBJModel
 {
@@ -15,6 +16,6 @@ class OBJModel
 
 public:
     void readfile(const char* filename);
-    void draw();
+    void draw(GLfloat red, GLfloat green, GLfloat blue);
 };
 

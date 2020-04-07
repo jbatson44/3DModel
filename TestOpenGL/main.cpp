@@ -10,12 +10,51 @@
 //#include "GUI.cpp"
 
 /* Global variables */
+
 char title[] = "3D Shapes";
+// drawing mode
 GLint polyMode = GL_FILL;
-std::string shape;
+
+// the shape to be drawn
+std::string shape = "Cube";
+// custom model
 OBJModel model;
 GUI gui;
 
+// translation and rotation values
+GLfloat translate_x = 0.0f;
+GLfloat translate_y = 0.0f;
+GLfloat translate_z = 0.0f;
+GLfloat rotation_x = 0.0f;
+GLfloat rotation_y = 0.0f;
+GLfloat transAmount = .5f;
+GLfloat rotAmount = 5.0f;
+GLfloat red = 0.5f;
+GLfloat green = 0.5f;
+GLfloat blue = 0.5f;
+
+// struct to hold the rgb values of a color
+struct Color
+{
+    GLfloat red;
+    GLfloat green;
+    GLfloat blue;
+};
+
+// our possible colors
+Color color[] = {
+{ 1.0f, 0.0f, 0.0f }, //red
+{ 0.0f, 1.0f, 0.0f }, //green
+{ 0.0f, 0.0f, 1.0f }, //blue
+{ 1.0f, 1.0f, 0.0f }, //yellow
+{ 1.0f, 0.0f, 1.0f }, //purple
+{ 0.0f, 1.0f, 1.0f }, //teal
+{ 1.0f, 1.0f, 1.0f }, //white
+{ 0.5f, 0.5f, 0.5f }  //grey
+};
+
+int colorSize = sizeof(color) / sizeof(color[0]);
+int colorIndex = 0;
 /* Initialize OpenGL Graphics */
 void initGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -28,7 +67,9 @@ void initGL() {
 
 void displayCube()
 {
-    glColor3f(1.0f, 0.0f, 0.0f);
+    glTranslatef(translate_x, translate_y, translate_z);
+    //glColor3f(1.0f, 0.0f, 0.0f);
+    glColor3f(red, green, blue);
     glutSolidCube(1.0);
     //glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
     //   // Top face (y = 1.0f)
@@ -79,50 +120,56 @@ void displayCube()
 
 void displayPyramid()
 {
+    glTranslatef(translate_x, translate_y, translate_z);
     glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
        // Front
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    glColor3f(red, green, blue);
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
     glVertex3f(-1.0f, -1.0f, 1.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(1.0f, -1.0f, 1.0f);
 
     // Right
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(1.0f, -1.0f, 1.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
     glVertex3f(1.0f, -1.0f, -1.0f);
 
     // Back
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
     glVertex3f(1.0f, -1.0f, -1.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(-1.0f, -1.0f, -1.0f);
 
     // Left
-    glColor3f(1.0f, 0.0f, 0.0f);       // Red
+    //glColor3f(1.0f, 0.0f, 0.0f);       // Red
     glVertex3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);       // Blue
+    //glColor3f(0.0f, 0.0f, 1.0f);       // Blue
     glVertex3f(-1.0f, -1.0f, -1.0f);
-    glColor3f(0.0f, 1.0f, 0.0f);       // Green
+    //glColor3f(0.0f, 1.0f, 0.0f);       // Green
     glVertex3f(-1.0f, -1.0f, 1.0f);
     glEnd();   // Done drawing the pyramid
 }
 
 void displaySphere()
 {
-    glColor3f(0.9, 0.3, 0.2);
+    glTranslatef(translate_x, translate_y, translate_z);
+    //glColor3f(0.9, 0.3, 0.2);
+    glColor3f(red, green, blue);
     glutSolidSphere(1.0, 50, 50);
 }
 
 void displayOther()
 {
-    model.draw();
+    glTranslatef(translate_x, translate_y, translate_z);
+    //glColor3f(red, green, blue);
+    model.draw(red, green, blue);
 }
 
 /* Handler for window-repaint event. Called back when the window first appears and
@@ -131,10 +178,17 @@ void display() {
     glPolygonMode(GL_FRONT_AND_BACK, polyMode);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear color and depth buffers
     glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
-    //std::cout << polyMode << std::endl;
+   
     // Render a color-cube consisting of 6 quads with different colors
     glLoadIdentity();                 // Reset the model-view matrix
-    glTranslatef(0.0f, 0.0f, -7.0f);  // Move right and into the screen
+    glTranslatef(0.0f, 0.0f, -7.0f);  
+    gluLookAt(
+        0.0f, 0.0f, 3.0f,
+        0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f);
+
+    glRotatef(rotation_x, 1.0f, 0.0f, 0.0f);
+    glRotatef(rotation_y, 0.0f, 1.0f, 0.0f);
 
     if (shape == "Cube")
     {
@@ -192,27 +246,27 @@ void specialKeys(int key, int x, int y)
     if (key == GLUT_KEY_UP)
     {
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        rotation_x += rotAmount;
     }
     // DOWN ARROW
     if (key == GLUT_KEY_DOWN)
     {
-        exit(0);
+        rotation_x -= rotAmount;
     }
     // LEFT ARROW
     if (key == GLUT_KEY_LEFT)
     {
-        exit(0);
+        rotation_y += rotAmount;
     }
     // RIGHT ARROW
     if (key == GLUT_KEY_RIGHT)
     {
-        exit(0);
+        rotation_y -= rotAmount;
     }
 }
 
 void normalKeys(unsigned char key, int x, int y)
 {
-    std::cout << "input\n";
     // ESCAPE
     if (key == 27)
     {
@@ -229,22 +283,91 @@ void normalKeys(unsigned char key, int x, int y)
             polyMode = GL_FILL;
         }
     }
+    if (key == 'w')
+    {
+        translate_z += transAmount;
+    }
+    if (key == 's')
+    {
+        translate_z -= transAmount;
+    }
+    if (key == 'a')
+    {
+        translate_x -= transAmount;
+    }
+    if (key == 'd')
+    {
+        translate_x += transAmount;
+    }
+    if (key == 'q')
+    {
+        translate_y += transAmount;
+        
+    }
+    if (key == 'e')
+    {
+        translate_y -= transAmount;
+       
+    }
+    if (key == 'c')
+    {
+        red = color[colorIndex].red;
+        green = color[colorIndex].green;
+        blue = color[colorIndex].blue;
+        colorIndex = (colorIndex + 1) % colorSize;
+    }
     // ONE
     if (key == '1')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "Cube";
     }
     // TWO
     if (key == '2')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "Pyramid";
     }
     if (key == '3')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "Sphere";
     }
     if (key == '4')
     {
+        translate_x = 0.0f;
+        translate_y = 0.0f;
+        translate_z = 0.0f;
+        rotation_x = 0.0f;
+        rotation_y = 0.0f;
+        red = 1.0f;
+        green = 1.0f;
+        blue = 1.0f;
+
         shape = "other";
     }
     glutPostRedisplay();
@@ -253,15 +376,19 @@ void normalKeys(unsigned char key, int x, int y)
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv) {
     
-    model.readfile("cube.obj");
+    //model.readfile("cube.obj");
     //model.readfile("Human.obj");
     //model.readfile("M9.obj");
     //model.readfile("TieOBJ.obj");
+    model.readfile("alienbest2.obj"); // doesn't work quite right because it is quads not triangles
     glutInit(&argc, argv);            // Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
     glutInitWindowSize(640, 480);   // Set the window's initial width & height
     glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
     glutCreateWindow(title);          // Create window with the given title
+
+
+
     void (*displayFunc)() = &display;
     glutDisplayFunc(displayFunc);       // Register callback handler for window re-paint event
     glutIdleFunc(displayFunc);
